@@ -9,6 +9,7 @@
 
 		packages = with pkgs; [
 			neofetch
+			obsidian
 		];
 	};
 	
@@ -18,6 +19,15 @@
 			rebuild = "sudo nixos-rebuild switch";
 		};
 	};
+
+	programs.neovim = {
+		enable = true;
+		defaultEditor = true;
+		plugins = with pkgs.vimPlugins; [
+			gruvbox-material
+			nerdtree
+		]
+	}
 	
 	# Let Home Manager install and manage itself.
   	programs.home-manager.enable = true;
