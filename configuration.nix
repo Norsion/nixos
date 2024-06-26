@@ -8,12 +8,11 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./general/bundle.nix
+      ./host/bundle.nix
     ];
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
+  #nix.settings.experimental-features = [ "nix-command" "flakes" ];
   networking.hostName = "nixos"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -54,8 +53,8 @@
 
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  #services.xserver.displayManager.gdm.enable = true;
+  #services.xserver.desktopManager.gnome.enable = true;
   
 
   # Configure keymap in X11
@@ -81,6 +80,7 @@
 	}];
   };
 
+  #nixpkgs.config.allowUnfree = true; 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 
@@ -108,53 +108,9 @@
     %wheel ALL=(ALL) ALL
   '';
 
-  nixpkgs.config.allowUnfree = true; 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    binwalk            # Can analyze files for other files inside them.
-    btop htop          # System monitors.
-    coreutils usbutils # Common utilities.
-    fastfetch          # Systeminfo summary.
-    ffmpeg             # Video/audio converter.
-    file               # Get general info about a file.
-    gcc                # C compiler.
-    gdu                # TUI storage analyzer.
-    gnumake gnused     # GNU utils.
-    gparted parted     # GUI/CLI disk partition tool.
-    imagemagick        # Image converter and transformation tool.
-    jq                 # Json parser.
-    lm_sensors         # Hardware sensors, like temperature and fan speeds.
-    lshw               # Detailed hardware info tool.
-    lsof               # Find current file users.
-    nmap               # Network analyzer.
-    parallel           # Run programs in parallel.
-    zip unzip          # Zip archive/unarchive tools.
-    smartmontools      # S.M.A.R.T. tools.
-    sqlite             # Serverless file-based database engine.
-    tree               # Show directory stricture as a tree.
-    ventoy             # Boot multiple ISO/images from a single USB stick.
-    wget               # CLI http download tool.
-    git
-    curl               # CLI http client.
-    networkmanager
-    home-manager
-    neovim
-    firefox
-  ];
-
   # Special packages.
   programs.adb.enable     = true;
   programs.java.enable    = true;
-
-  nix.settings.experimental-features = ["nix-command" "flakes"];
-
-  nix.gc = {
-    automatic =true;
-    dates = "weekly";
-    options = "--delete-older-than 30d";
-  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

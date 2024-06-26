@@ -1,34 +1,24 @@
-{ config, pkgs, ... }: {
+{
 	home = {
-
-		# Home Manager needs a bit of information about you and the
-  		# paths it should manage.		
 		username = "hitonoe";
 		homeDirectory = "/home/hitonoe";
-		stateVersion = "23.11";
+		stateVersion = "24.05";
 
-		packages = with pkgs; [
-			neofetch
-			obsidian
-		];
+		#packages = with pkgs; [
+		#	neofetch
+		#];
 	};
 	
-	programs.bash = {
-		enable = true;
-		shellAliases = {
-			rebuild = "sudo nixos-rebuild switch";
-		};
-	};
+	imports = [
+		./home.d/bundle.nix
+	];
 
-	programs.neovim = {
-		enable = true;
-		defaultEditor = true;
-		plugins = with pkgs.vimPlugins; [
-			gruvbox-material
-			nerdtree
-		]
-	}
-	
-	# Let Home Manager install and manage itself.
-  	programs.home-manager.enable = true;
+	#programs.neovim = {
+	#	enable = true;
+	#	defaultEditor = true;
+	#	plugins = with pkgs.vimPlugins; [
+	#		gruvbox-material
+	#		nerdtree
+	#	];
+	#};
 }
