@@ -30,6 +30,13 @@
 	}];
   };
 
+	fileSystems."/nix" = {
+		device = "/dev/disk/by-label/nix";
+		fsType = "ext4";
+		neededForBoot = true;
+		options = [ "noatime" ];
+	};
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.hitonoe = {
     isNormalUser = true;
