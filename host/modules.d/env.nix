@@ -1,6 +1,9 @@
 { pkgs, ... }:
 
 {
+	nixpkgs.config = {
+    		permittedInsecurePackages = ["python-2.7.18.8" "electron-25.9.0"];
+  	};
 
 	environment.systemPackages = with pkgs; [
     		vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
@@ -32,6 +35,49 @@
     		networkmanager
     		home-manager
     		neovim
+
+				# Desktop apps
     		firefox
+				obsidian
+				alacritty
+
+				# Xorg stuff
+				xclip
+
+				# Hyprland stuff
+				hyprcursor
+				hypridle
+
+				# Wayland stuff
+    		xwayland
+    		wl-clipboard
+    		cliphist
+
+	      # WMs and stuff
+    		herbstluftwm
+    		hyprland
+    		seatd
+    		xdg-desktop-portal-hyprland
+    		polybar
+    		waybar
+
   ];
+
+	programs = {
+				zsh.enable			= true;
+				xwayland.enable = true;
+				firefox.enable  = true;
+				waybar.enable   = true;
+	};
+
+	fonts.packages = with pkgs; [
+    		jetbrains-mono
+    		noto-fonts
+    		noto-fonts-emoji
+    		twemoji-color-font
+    		font-awesome
+    		powerline-fonts
+    		powerline-symbols
+    		(nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
+  	];
 }

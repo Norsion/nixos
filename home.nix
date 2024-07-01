@@ -10,6 +10,7 @@
 	};
 	
 	imports = [
+		./home.d/modules.d/zsh.nix
 		./home.d/bundle.nix
 	];
 
