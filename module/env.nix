@@ -40,6 +40,8 @@
     		firefox
 				obsidian
 				alacritty
+				foot
+				discord
 
 				# Xorg stuff
 				xclip

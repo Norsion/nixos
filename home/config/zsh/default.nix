@@ -16,10 +16,10 @@
 
       hms = "home-manager switch --flake ${flakeDir}";
 
-      conf  = "nvim ${flakeDir}/configuration.nix";
-			hconf = "nvim ${flakeDir}/home.d/modules.d/wm/hyprland/hyprland.nix";
-			wconf = "nvim ${flakeDir}/home.d/modules.d/wm/waybar/waybar.nix";
-      pkgs  = "nvim ${flakeDir}/host/modules.d/env.nix";
+      conf  = "nvim ${flakeDir}/modules/configuration.nix";
+			hconf = "nvim ${flakeDir}/home/config/hyprland/default.nix";
+			wconf = "nvim ${flakeDir}/home/config/waybar/default.nix";
+      pkgs  = "nvim ${flakeDir}/modules/env.nix";
 
       ll = "ls -loah";
       v = "nvim";

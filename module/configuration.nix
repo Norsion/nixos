@@ -7,16 +7,26 @@
 {
   imports =
     [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./general/bundle.nix
-      ./host/bundle.nix
+			../host/desktop/hardware-configuration.nix
+			./boot.nix
+			./variables.nix
+			./de.nix
+			./dm.nix
+			./env.nix
+			./hardware.nix
+			./locales.nix
+			./networking.nix
+			./nix.nix
+			./nixpkgs.nix
+			./services.nix
+			./wm.nix
     ];
 
   #Gnome DE and GTK apps configuration.
-  programs.dconf.enable = true;
-  programs.dconf.profiles.user = {
+  programs.dconf.enable 	= true;
+  programs.dconf.profiles.user	= {
 	enableUserDb = true; # Delete `~/.config/dconf/user` to reset user settings.
-	databases = [{
+	databases    = [{
 		settings = {
 			"org/gnome/desktop/input-sources" = with lib.gvariant; {
 				current          = mkUint32 0;
@@ -31,20 +41,17 @@
   };
 
 	fileSystems."/nix" = {
-		device = "/dev/disk/by-label/nix";
-		fsType = "ext4";
-		neededForBoot = true;
-		options = [ "noatime" ];
+		device		= "/dev/disk/by-label/nix";
+		fsType		= "ext4";
+		neededForBoot 	= true;
+		options 	= [ "noatime" ];
 	};
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.hitonoe = {
-    isNormalUser = true;
-    home = "/home/hitonoe";
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-    packages = with pkgs; [
-      tree
-    ];
+		isNormalUser	= true;
+		home		= "/home/hitonoe";
+		extraGroups	= [ "wheel" ]; # Enable ‘sudo’ for the user.
 		shell = pkgs.zsh;
   };
 
