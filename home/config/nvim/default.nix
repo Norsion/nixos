@@ -1,31 +1,29 @@
-{  lib, config, pkgs, ... }:
-with lib;
+{ pkgs, ... }:
+
 let
-    cfg = config.modules.nvim;
-in {
-    options.modules.nvim = { enable = mkEnableOption "nvim"; };
-    config = mkIf cfg.enable {
-
-        home.file.".config/nvim/settings.lua".source = ./init.lua;
-
-        home.packages = with pkgs; [
-            rnix-lsp nixfmt # Nix
-            sumneko-lua-language-server stylua # Lua
-        ];
-
-        programs.zsh = {
-            initExtra = ''
-                export EDITOR="nvim"
-            '';
-
-            shellAliases = {
-                nv = "nvim -i NONE";
-            };
+    # Source my theme
+    jabuti-nvim = pkgs.vimUtils.buildVimPlugin {
+        name = "jabuti-nvim";
+        src = pkgs.fetchFromGitHub {
+            owner = "jabuti-theme";
+            repo = "jabuti-nvim";
+            rev = "17f1b94cbf1871a89cdc264e4a8a2b3b4f7c76d2";
+            sha256 = "sha256-iPjwx/rTd98LUPK1MUfqKXZhQ5NmKx/rN8RX1PIuDFA=";
         };
+    };
+in {
+        home.file.".config/nvim/settings.lua".source = ./init.lua;
+        
+        home.packages = with pkgs; [
+            #rnix-lsp 
+            nixfmt # Nix
+            sumneko-lua-language-server 
+            stylua # Lua
+        ];
 
         programs.neovim = {
             enable = true;
-            plugins = with pkgs.vimPlugins; [
+            plugins = with pkgs.vimPlugins; [ 
                 vim-nix
                 plenary-nvim
                 {
@@ -53,17 +51,6 @@ in {
                     config = "lua require('indent_blankline').setup()";
                 }
                 {
-                    plugin = nvim-lspconfig;
-                    config = ''
-                        lua << EOF
-                        require('lspconfig').rust_analyzer.setup{}
-                        require('lspconfig').sumneko_lua.setup{}
-                        require('lspconfig').rnix.setup{}
-                        require('lspconfig').zk.setup{}
-                        EOF
-                    '';
-                }
-                {
                     plugin = nvim-treesitter;
                     config = ''
                     lua << EOF
@@ -82,5 +69,4 @@ in {
                 luafile ~/.config/nvim/settings.lua
             '';
         };
-    };
 }

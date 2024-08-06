@@ -1,26 +1,24 @@
-{ config, lib, inputs, ...}:
-
 {
     imports = [ ../../home/home.nix ];
-    config.modules = {
+    config = {
         # gui
-        firefox.enable = true;
-        foot.enable = true;
-        #eww.enable = true;
-        #dunst.enable = true;
+        firefox.enable  = true;
+        foot.enable     = true;
+        eww.enable     = true;
+        #dunst.enable   = true;
         hyprland.enable = true;
-				waybar.enable = true;
-        wofi.enable = true;
+				#waybar.enable  = true;
+        wofi.enable     = true;
 
         # cli
-        nvim.enable = true;
-        zsh.enable = true;
-        git.enable = true;
-        #gpg.enable = true;
+        nvim.enable   = true;
+        zsh.enable    = true;
+        git.enable    = true;
+        #gpg.enable    = true;
         #direnv.enable = true;
 
         # system
-        xdg.enable = true;
+        xdg.enable      = true;
         packages.enable = true;
     };
 }

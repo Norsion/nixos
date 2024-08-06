@@ -39,16 +39,14 @@
 				# Desktop apps
     		firefox
 				obsidian
-				alacritty
 				foot
+				alacritty
 				discord
+				vscodium
+				nixd
 
 				# Xorg stuff
 				xclip
-
-				# Hyprland stuff
-				hyprcursor
-				hypridle
 
 				# Wayland stuff
     		xwayland
@@ -56,12 +54,12 @@
     		cliphist
 
 	      # WMs and stuff
+				mako
     		herbstluftwm
-    		hyprland
     		seatd
-    		xdg-desktop-portal-hyprland
     		polybar
     		waybar
+				eww
 
   ];
 
@@ -71,15 +69,4 @@
 				firefox.enable  = true;
 				waybar.enable   = true;
 	};
-
-	fonts.packages = with pkgs; [
-    		jetbrains-mono
-    		noto-fonts
-    		noto-fonts-emoji
-    		twemoji-color-font
-    		font-awesome
-    		powerline-fonts
-    		powerline-symbols
-    		(nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
-  	];
 }

@@ -17,9 +17,11 @@
 			./locales.nix
 			./networking.nix
 			./nix.nix
+			./fonts.nix
 			./nixpkgs.nix
 			./services.nix
-			./wm.nix
+			./sway.nix
+			./hyprland.nix
     ];
 
   #Gnome DE and GTK apps configuration.
@@ -56,6 +58,7 @@
   };
 
   security.sudo.enable = true;
+	security.polkit.enable = true;
 
   # Allow members of the "wheel" group to sudo:
   security.sudo.configFile = ''
