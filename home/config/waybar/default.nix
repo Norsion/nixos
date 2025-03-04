@@ -1,344 +1,191 @@
+ { self, lib, pkgs, ... }:
  {
   programs.waybar = {
     enable = true;
+    systemd.enable = true;
+    systemd.target = "graphical-session.target";
+    
     settings = {
       mainBar = {
         layer = "top";
         position = "top";
-        margin = "9 13 -10 18";
-
-        modules-left = ["hyprland/workspaces" "hyprland/language" "keyboard-state" "hyprland/submap"];
-        modules-center = ["clock" ];
-        modules-right = [ "custom/mem" "cpu" "tray"];
-
-        "hyprland/workspaces" = {
-          disable-scroll = true;
-        };
-
-    "hyprland/language" = {
-        format-en = "US";
-        format-ru = "RU";
-	      min-length = 5;
-	      tooltip = false;
-    };
-
-    "keyboard-state" = {
-        #numlock = true;
-        capslock = true;
-        format = "{icon} ";
-        format-icons = {
-            locked = " ";
-            unlocked = "";
-        };
-    };
-
-    "clock" = {
-        # timezone = "America/New_York";
-        tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
-        format = "{:%a; %d %b, %I:%M %p}";
-    };
-
-    #"custom/weather" = {
-    #   format = "{}";
-    #    tooltip = true;
-    #    interval = 1800;
-    #    exec = "$HOME/.config/waybar/scripts/wttr.py";
-    #    return-type = "json";
-    #};
-
-    #"pulseaudio" = {
-    #    # scroll-step = 1; # %, can be a float
-    #    reverse-scrolling = 1;
-    #    format = "{volume}% {icon} {format_source}";
-    #    format-bluetooth = "{volume}% {icon} {format_source}";
-    #    format-bluetooth-muted = " {icon} {format_source}";
-    #    format-muted = " {format_source}";
-    #    format-source = "{volume}% ";
-    #    format-source-muted = "";
-    #    format-icons = {
-    #        headphone = "";
-    #        hands-free = "";
-    #        headset = "";
-    #        phone = "";
-    #        portable = "";
-    #        car = "";
-    #        default = ["" "" ""];
-    #    };
-    #    on-click = "pavucontrol";
-    #    min-length = 13;
-    #};
-
-    "custom/mem" = {
-        format = "{} ";
-        interval = 3;
-        exec = "free -h | awk '/Mem:/{printf $3}'";
-        tooltip = false;
-    };
-
-    "cpu" = {
-      interval = 2;
-      format = "{usage}% ";
-      min-length = 6;
-    };
-
-    "temperature" = {
-        # thermal-zone = 2;
-        # hwmon-path = "/sys/class/hwmon/hwmon2/temp1_input";
-        critical-threshold = 80;
-        # format-critical = "{temperatureC}°C {icon}";
-        format = "{temperatureC}°C {icon}";
-        format-icons = ["" "" "" "" ""];
-        tooltip = false;
-    };
-
-    #"backlight" = {
-    #    device = "intel_backlight";
-    #    format = "{percent}% {icon}";
-    #    format-icons = [""];
-    #    min-length = 7;
-    #};
-
-    #battery = {
-    #    states = {
-    #        warning = 30;
-    #        critical = 15;
-    #    };
-    #    format = "{capacity}% {icon}";
-    #    format-charging = "{capacity}% ";
-    #    format-plugged = "{capacity}% ";
-    #    format-alt = "{time} {icon}";
-    #    format-icons = ["" "" "" "" "" "" "" "" "" ""];
-	#on-update = "$HOME/.config/waybar/scripts/check_battery.sh";
-  #  };
-
-    tray = {
-        icon-size = 16;
+        exclusive = true;
+        fixed-center = true;
+        gtk-layer-shell = true;
         spacing = 0;
-    };
+        margin-top = 7;
+        margin-bottom = 0;
+        margin-left = 7;
+        margin-right = 7;
+
+        modules-left = [
+            "group/datetime" 
+        ];
+        modules-center = [
+            "sway/workspaces"
+        ];
+        modules-right = [ 
+            "sway/language" 
+            "pulseaudio"
+            "privacy"
+            "group/hardware"
+            "network" 
+            "custom/notification"
+        ];
+
+                
+        "sway/workspaces" = {
+            all-outputs = true;
+            disable-scroll = true;
+        };
+
+        "sway/language" = {
+            format = "{}";
+            format-en = "US";
+            format-ru = "RU";
+          };
+
+        "keyboard-state" = {
+            #numlock = true;
+            capslock = true;
+            format = "{icon} ";
+            format-icons = {
+                locked = " ";
+                unlocked = "";
+            };
+        };
+
+        "clock#time" = {
+            format = "{:%H:%M}";
+            #on-click = "thunderbird";
+            tooltip-format = "<big><tt>{calendar}</tt></big>";
+        };
+        "clock#date" = {
+            format = "{:%a %d}";
+            on-click = "thunderbird";
+            tooltip-format = "<big><tt>{calendar}</tt></big>";
+        };
+
+        # Pulseaudio
+        pulseaudio = {
+            format = "{volume} {icon} / {format_source}";
+            format-source = "󰍬";
+            format-source-muted = "󰍭";
+            format-muted = "󰖁 / {format_source}";
+            format-icons = {
+              default = [
+                "󰕿"
+                "󰖀"
+                "󰕾"
+              ];
+            };
+            on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
+            on-click-right = "${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
+            on-scroll-up = "${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +1%";
+            on-scroll-down = "${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -1%";
+            tooltip = false;
+        };
+
+        # Network
+        network = {
+            format-icons = [
+              "󰤯"
+              "󰤟"
+              "󰤢"
+              "󰤥"
+              "󰤨"
+            ];
+            format-wifi = "{icon}";
+            format-ethernet = "󰈀"; # 󰈁
+            format-disconnected = "⚠";
+            tooltip-format-wifi = "WiFi: {essid} ({signalStrength}%)\n {bandwidthUpBytes}  {bandwidthDownBytes}";
+            tooltip-format-ethernet = "Ethernet: {ifname}\n {bandwidthUpBytes}  {bandwidthDownBytes}";
+            tooltip-format-disconnected = "Disconnected";
+            on-click = "${pkgs.networkmanagerapplet}/bin/nm-connection-editor";
+            interval = 5;
+        };
+
+        memory = {
+            format = "m:{percentage}%";
+            interval = 2;
+            on-click = "foot -e bash -c btop";
+            on-click-right = "powersave toggle";
+            states.critical = 80;
+        };
+
+
+        "cpu#usage" = {
+            format = "u:{usage}%";
+            interval = 2;
+            on-click = "foot -e btop";
+            states.critical = 100;
+            tooltip = false;
+        };
+        "cpu#load" = {
+            format = "l:({load})";
+            interval = 2;
+            on-click = "foot -e btop";
+            tooltip = false;
+        };
+
+        "temperature" = {
+            hwmon-path = "/sys/class/hwmon/hwmon2/temp1_input";
+            critical-threshold = 80;
+            # format-critical = "{temperatureC}°C {icon}";
+            format = "{temperatureC}°C";
+            interval = 2;
+            tooltip = false;
+        };
+
+        # Privacy
+        privacy = {
+            icon-size = 15;
+        };
+
+        # Notifications
+        "custom/notification" = {
+            exec = "${pkgs.swaynotificationcenter}/bin/swaync-client -swb";
+            return-type = "json";
+            format = "{icon}";
+            on-click = "${pkgs.swaynotificationcenter}/bin/swaync-client -t -sw";
+            on-click-right = "${pkgs.swaynotificationcenter}/bin/swaync-client -d -sw";
+            escape = true;
+
+            format-icons = {
+              notification = "󰂚";
+              none = "󰂜";
+              dnd-notification = "󰂛";
+              dnd-none = "󰪑";
+              inhibited-notification = "󰂛";
+              inhibited-none = "󰪑";
+              dnd-inhibited-notification = "󰂛";
+              dnd-inhibited-none = "󰪑";
+            };
+        };
+
+        "group/hardware" = {
+            orientation = "horizontal";
+            modules = [
+                "cpu#usage"
+                "cpu#load"
+                "temperature"
+                "memory"
+            ];
+        };
+
+        "group/datetime" = {
+            orientation = "horizontal";
+            modules = [
+                "clock#time"
+                "clock#date"
+            ];
+        };
 
       };
     };
 
-    style =
-      ''
-* {
-    border: none;
-    border-radius: 0;
-    /* `otf-font-awesome` is required to be installed for icons */
-    font-family: JetBrains Mono;
-    font-weight: bold;
-    min-height: 20px;
-}
-
-window#waybar {
-    background: transparent;
-}
-
-window#waybar.hidden {
-    opacity: 0.2;
-}
-
-#workspaces {
-    margin-right: 8px;
-    border-radius: 10px;
-    transition: none;
-    background: #383c4a;
-}
-
-#workspaces button {
-    transition: none;
-    color: #7c818c;
-    background: transparent;
-    padding: 5px;
-    font-size: 18px;
-}
-
-#workspaces button.persistent {
-    color: #7c818c;
-    font-size: 12px;
-}
-
-#workspaces button:hover {
-    transition: none;
-    box-shadow: inherit;
-    text-shadow: inherit;
-    border-radius: inherit;
-    color: #383c4a;
-    background: #7c818c;
-}
-
-#workspaces button.active {
-    background: #4e5263;
-    color: white;
-    border-radius: inherit;
-}
-
-#language {
-    padding-left: 16px;
-    padding-right: 8px;
-    border-radius: 10px 0px 0px 10px;
-    transition: none;
-    color: #ffffff;
-    background: #383c4a;
-}
-
-#keyboard-state {
-    margin-right: 8px;
-    padding-right: 16px;
-    border-radius: 0px 10px 10px 0px;
-    transition: none;
-    color: #ffffff;
-    background: #383c4a;
-}
-
-#custom-pacman {
-    padding-left: 16px;
-    padding-right: 8px;
-    border-radius: 10px 0px 0px 10px;
-    transition: none;
-    color: #ffffff;
-    background: #383c4a;
-}
-
-#custom-mail {
-    margin-right: 8px;
-    padding-right: 16px;
-    border-radius: 0px 10px 10px 0px;
-    transition: none;
-    color: #ffffff;
-    background: #383c4a;
-}
-
-#submap {
-    padding-left: 16px;
-    padding-right: 16px;
-    border-radius: 10px;
-    transition: none;
-    color: #ffffff;
-    background: #383c4a;
-}
-
-#clock {
-    padding-left: 16px;
-    padding-right: 16px;
-    border-radius: 10px 0px 0px 10px;
-    transition: none;
-    color: #ffffff;
-    background: #383c4a;
-}
-
-#custom-weather {
-    padding-right: 16px;
-    border-radius: 0px 10px 10px 0px;
-    transition: none;
-    color: #ffffff;
-    background: #383c4a;
-}
-
-#pulseaudio {
-    margin-right: 8px;
-    padding-left: 16px;
-    padding-right: 16px;
-    border-radius: 10px;
-    transition: none;
-    color: #ffffff;
-    background: #383c4a;
-}
-
-#pulseaudio.muted {
-    background-color: #90b1b1;
-    color: #2a5c45;
-}
-
-#custom-mem {
-    margin-right: 8px;
-    padding-left: 16px;
-    padding-right: 16px;
-    border-radius: 10px;
-    transition: none;
-    color: #ffffff;
-    background: #383c4a;
-}
-
-#cpu {
-    margin-right: 8px;
-    padding-left: 16px;
-    padding-right: 16px;
-    border-radius: 10px;
-    transition: none;
-    color: #ffffff;
-    background: #383c4a;
-}
-
-#temperature {
-    margin-right: 8px;
-    padding-left: 16px;
-    padding-right: 16px;
-    border-radius: 10px;
-    transition: none;
-    color: #ffffff;
-    background: #383c4a;
-}
-
-#temperature.critical {
-    background-color: #eb4d4b;
-}
-
-#backlight {
-    margin-right: 8px;
-    padding-left: 16px;
-    padding-right: 16px;
-    border-radius: 10px;
-    transition: none;
-    color: #ffffff;
-    background: #383c4a;
-}
-
-#battery {
-    margin-right: 8px;
-    padding-left: 16px;
-    padding-right: 16px;
-    border-radius: 10px;
-    transition: none;
-    color: #ffffff;
-    background: #383c4a;
-}
-
-#battery.charging {
-    color: #ffffff;
-    background-color: #26A65B;
-}
-
-#battery.warning:not(.charging) {
-    background-color: #ffbe61;
-    color: black;
-}
-
-#battery.critical:not(.charging) {
-    background-color: #f53c3c;
-    color: #ffffff;
-    animation-name: blink;
-    animation-duration: 0.5s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-}
-
-#tray {
-    padding-left: 16px;
-    padding-right: 16px;
-    border-radius: 10px;
-    transition: none;
-    color: #ffffff;
-    background: #383c4a;
-}
-
-@keyframes blink {
-    to {
-        background-color: #ffffff;
-        color: #000000;
-    }
-}
+    style = lib.mkAfter ''
+        ${builtins.readFile "${self}/home/config/waybar/style.css"}
       '';
   };
 }

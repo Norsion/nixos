@@ -1,7 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system. Help is available in the configuration.nix(5) man page, on
-# https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-
 { config, lib, pkgs, setting, ... }:
 
 {
@@ -12,18 +8,21 @@
 			./variables.nix
 			./de.nix
 			./dm.nix
-			./env.nix
+			./packages.nix
 			./hardware.nix
 			./locales.nix
-			./networking.nix
+			./network/networking.nix
+			./sound.nix
+			./stylix/default.nix
+			#./network/wireguard.nix
+			#./network/openvpn.nix
 			./nix.nix
 			./fonts.nix
 			./nixpkgs.nix
 			./services.nix
 			./sway.nix
-			./hyprland.nix
     ];
-
+	
   #Gnome DE and GTK apps configuration.
   programs.dconf.enable 	= true;
   programs.dconf.profiles.user	= {

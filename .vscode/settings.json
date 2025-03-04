@@ -1,0 +1,41 @@
+{
+  "editor.fontSize": 18,
+  "editor.tabSize": 2,
+  "nix.enableLanguageServer": true,
+  "nix.serverPath": "nil",
+  "nix.formatterPath": "nixfmt",
+  "nix.serverSettings": {
+      "nil": {
+          "diagnostics": {
+              "ignored": [
+                  "unused_binding",
+                  "unused_with"
+              ]
+          },
+          "formatting": {
+              "command": [
+                  "nixpkgs-fmt"
+              ]
+          },
+          "filetypes": [
+              "nix"
+          ],
+          "rootPatterns": [
+              "flake.nix"
+          ]
+      }
+  },
+  "terminal.external.linuxExec": "foot",
+  "terminal.explorerKind": "both",
+  "terminal.integrated.defaultLocation": "editor",
+  "terminal.integrated.defaultProfile.linux": "zsh",
+  "terminal.integrated.enableVisualBell": true,
+  "terminal.integrated.tabs.location": "left",
+  "workbench.settings.applyToAllProfiles": [
+      "nix.enableLanguageServer",
+      "nix.formatterPath",
+      "nix.hiddenLanguageServerErrors",
+      "nix.serverPath",
+      "nix.serverSettings"
+  ]
+}

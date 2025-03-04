@@ -4,11 +4,11 @@
         # gui
         firefox.enable  = true;
         foot.enable     = true;
-        eww.enable     = true;
+        stylix.enable   = true;
+        #eww.enable     = true;
         #dunst.enable   = true;
-        hyprland.enable = true;
 				#waybar.enable  = true;
-        wofi.enable     = true;
+        #wofi.enable     = true;
 
         # cli
         nvim.enable   = true;

@@ -3,7 +3,7 @@
 {
   services = {
 	openssh = {                                  # openssh options
-            enable    = true;                          # toggle for enabling openssh
+            enable    = false;                          # toggle for enabling openssh
             allowSFTP = false;                        # toggle for enabling SFTP
         };
         xserver = {                                  # xserver options

@@ -1,4 +1,9 @@
 {
+    self, 
+    ... 
+}:
+
+{
     programs.firefox = {
             enable = true;
 
@@ -20,8 +25,10 @@
                     "dom.security.https_only_mode_ever_enabled"           = true;
                     "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
                     "browser.toolbars.bookmarks.visibility"               = "never";
-                    "geo.enabled"                                         =  false;
-
+                    "geo.enabled"                                         = false;
+                    "svg.context-properties.content.enabled"              = true;
+                    "layout.css.has-selector.enabled"                     = true;
+                    
                     # Disable telemetry
                     "browser.newtabpage.activity-stream.feeds.telemetry" = false;
                     "browser.ping-centre.telemetry"                      = false;
@@ -67,64 +74,10 @@
                     "network.http.sendRefererHeader" = 0;
                 };
 
-                # userChome.css to make it look better
-                userChrome = "
-                    * {
-                        box-shadow: none !important;
-                        border: 0px solid !important;
-                    }
+                # userChrome.css to make it look better
+                userChrome = builtins.readFile "${self}/home/config/firefox/chrome/userChrome.css";
 
-                    #tabbrowser-tabs {
-                        --user-tab-rounding: 8px;
-                    }
-
-                    .tab-background {
-                        border-radius: var(--user-tab-rounding) var(--user-tab-rounding) 0px 0px !important; /* Connected */
-                        margin-block: 1px 0 !important; /* Connected */
-                    }
-                    #scrollbutton-up, #scrollbutton-down { /* 6/10/2021 */
-                        border-top-width: 1px !important;
-                        border-bottom-width: 0 !important;
-                    }
-
-                    .tab-background:is([selected], [multiselected]):-moz-lwtheme {
-                        --lwt-tabs-border-color: rgba(0, 0, 0, 0.5) !important;
-                        border-bottom-color: transparent !important;
-                    }
-                    [brighttext='true'] .tab-background:is([selected], [multiselected]):-moz-lwtheme {
-                        --lwt-tabs-border-color: rgba(255, 255, 255, 0.5) !important;
-                        border-bottom-color: transparent !important;
-                    }
-
-                    /* Container color bar visibility */
-                    .tabbrowser-tab[usercontextid] > .tab-stack > .tab-background > .tab-context-line {
-                        margin: 0px max(calc(var(--user-tab-rounding) - 3px), 0px) !important;
-                    }
-
-                    #TabsToolbar, #tabbrowser-tabs {
-                        --tab-min-height: 29px !important;
-                    }
-                    #main-window[sizemode='true'] #toolbar-menubar[autohide='true'] + #TabsToolbar,
-                    #main-window[sizemode='true'] #toolbar-menubar[autohide='true'] + #TabsToolbar #tabbrowser-tabs {
-                        --tab-min-height: 30px !important;
-                    }
-                    #scrollbutton-up,
-                    #scrollbutton-down {
-                        border-top-width: 0 !important;
-                        border-bottom-width: 0 !important;
-                    }
-
-                    #TabsToolbar, #TabsToolbar > hbox, #TabsToolbar-customization-target, #tabbrowser-arrowscrollbox  {
-                        max-height: calc(var(--tab-min-height) + 1px) !important;
-                    }
-                    #TabsToolbar-customization-target toolbarbutton > .toolbarbutton-icon,
-                    #TabsToolbar-customization-target .toolbarbutton-text,
-                    #TabsToolbar-customization-target .toolbarbutton-badge-stack,
-                    #scrollbutton-up,#scrollbutton-down {
-                        padding-top: 7px !important;
-                        padding-bottom: 6px !important;
-                    }
-                ";
+                userContent = builtins.readFile "${self}/home/config/firefox/chrome/userContent.css";
             };
         };
 }

@@ -1,13 +1,19 @@
+{ pkgs, ... }:
 {
     services = {
         displayManager = {
-            sddm.enable      = false;            # toggle for SDDM  
+            sddm = {
+                enable = true;        # toggle for SDDM  
+                #theme  = "${pkgs.sddm-astronaut}/share/sddm/themes/astronaut";
+            };
+
             autoLogin.enable = false;       # autologin, for security purposes i DO NOT recommend toggle it
         };
         xserver = {
             displayManager = {
-                gdm.enable = true;         # toggle for GDM
-            }; 
+                gdm.enable = false;         # toggle for GDM
+                #wayland.enable = true;
+           }; 
         };
     };
 }
