@@ -27,8 +27,7 @@ tooltip label {
 
 /*  Waybar window */
 window#waybar {
-  background: @base00;
-  border-radius: 7px;
+  background: rgba(0, 0, 0, 0);
 }
 
 /* Left Modules */
@@ -55,7 +54,7 @@ window#waybar {
 #image,
 #privacy,
 #clock {
-  color: @base05;
+  color: rgba(205, 207, 70, 0.89);
   background: @base01;
   border: 1px solid @base03;
   border-radius: 5px;
@@ -65,6 +64,28 @@ window#waybar {
 
 #privacy {
   background: @base0B;
+}
+
+#cpu {
+  color: rgb(236, 93, 189);
+}
+
+#memory {
+  color: rgb(0, 119, 255);
+}
+
+#custom-notification,
+#network {
+  color: rgb(255, 255, 255);
+}
+
+#temperature {
+  color: rgb(70, 207, 155);
+  background: @base01;
+  border: 1px solid @base03;
+  border-radius: 5px; 
+  margin: 0.35rem 0.25rem;
+  padding: 0.2rem 0.6rem 0.2rem 0.6rem;
 }
 
 .modules-left #workspaces button {

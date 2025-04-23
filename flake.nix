@@ -37,6 +37,8 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
+
+		textfox.url = "github:adriankarlen/textfox";
 	};
 	
 	# outputs is a function of one argument that takes an attribute set of all the realized inputs, 
@@ -47,6 +49,7 @@
 		nixpkgsUnstable,
 		home-manager,
 		stylix,
+		textfox,
 		... 
 	} @inputs:
 			let
@@ -81,6 +84,7 @@
 				  modules = [ 
 						./home/home.nix
 						stylix.homeManagerModules.stylix
+						textfox.homeManagerModules.default
 				  ];
 			  };
 		  };

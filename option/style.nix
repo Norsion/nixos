@@ -6,7 +6,7 @@
   ...
 }:
 let
-  cfg = config.module.;
+  cfg = config.module;
 in
 {
 

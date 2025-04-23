@@ -13,6 +13,7 @@
     		btop htop          # System monitors.
     		coreutils usbutils # Common utilities.
     		fastfetch          # Systeminfo summary.
+				neofetch					 # Systeminfo summary.
     		ffmpeg             # Video/audio converter.
     		file               # Get general info about a file.
     		gcc                # C compiler.
@@ -80,6 +81,7 @@
 				#misc
 				vscodium								# By the time you set up nvim, you will die of old age
 				nixd
+				nix-tree
 
 				# Xorg stuff
 				xclip												# Tool to access the X clipboard from a console application
@@ -101,6 +103,7 @@
 
 				# gnome extensions
 				# gnome-shell-extensions
+				
 
   ];
 

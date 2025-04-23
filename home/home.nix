@@ -15,6 +15,7 @@
 		#./config/cursor
 		./config/git
 		./config/firefox
+		./config/firefox/textfox
 		./config/foot
 		./config/sway
 		./config/swaync
@@ -25,7 +26,7 @@
 	  stylix = {
     
     enable = true;
-    image = ./Anime-Girl-Rain.png;
+    image = ./wallpapers/milk/balcony.jpg;
     polarity = "dark";
     autoEnable = true;
 

@@ -15,14 +15,14 @@
         spacing = 0;
         margin-top = 7;
         margin-bottom = 0;
-        margin-left = 7;
-        margin-right = 7;
+        margin-left = 448;
+        margin-right = 448;
 
         modules-left = [
-            "group/datetime" 
+            "sway/workspaces"
         ];
         modules-center = [
-            "sway/workspaces"
+            "group/datetime" 
         ];
         modules-right = [ 
             "sway/language" 
@@ -56,7 +56,7 @@
         };
 
         "clock#time" = {
-            format = "{:%H:%M}";
+            format = "󰥔 {:%H:%M}";
             #on-click = "thunderbird";
             tooltip-format = "<big><tt>{calendar}</tt></big>";
         };
@@ -98,15 +98,16 @@
             format-wifi = "{icon}";
             format-ethernet = "󰈀"; # 󰈁
             format-disconnected = "⚠";
-            tooltip-format-wifi = "WiFi: {essid} ({signalStrength}%)\n {bandwidthUpBytes}  {bandwidthDownBytes}";
-            tooltip-format-ethernet = "Ethernet: {ifname}\n {bandwidthUpBytes}  {bandwidthDownBytes}";
+            tooltip-format-wifi =  "  {ifname} @ {essid}\nIP: {ipaddr}\nStrength: {signalStrength}%\nFreq: {frequency}MHz\n {bandwidthUpBits}  {bandwidthDownBits}";
+            tooltip-format-ethernet = " {ifname}\nIP: {ipaddr}\n {bandwidthUpBits}  {bandwidthDownBits}";
             tooltip-format-disconnected = "Disconnected";
+            format-alt = "  {ifname}";
             on-click = "${pkgs.networkmanagerapplet}/bin/nm-connection-editor";
             interval = 5;
         };
 
         memory = {
-            format = "m:{percentage}%";
+            format = "{percentage}%";
             interval = 2;
             on-click = "foot -e bash -c btop";
             on-click-right = "powersave toggle";
@@ -115,14 +116,14 @@
 
 
         "cpu#usage" = {
-            format = "u:{usage}%";
+            format = "{usage}%";
             interval = 2;
             on-click = "foot -e btop";
             states.critical = 100;
             tooltip = false;
         };
         "cpu#load" = {
-            format = "l:({load})";
+            format = "({load})";
             interval = 2;
             on-click = "foot -e btop";
             tooltip = false;

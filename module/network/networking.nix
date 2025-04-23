@@ -4,6 +4,15 @@ let
     wan = "enp6s0";
 in
 {
+    systemd = {
+        network.enable = true;
+
+        services = {
+            NetworkManager-wait-online.enable = false;
+            systemd-networkd-wait-online.enable = lib.mkForce false;
+        };
+    };
+
     networking = {                              # networking options
         # bonds = ;
         # bridges = ;
@@ -14,6 +23,7 @@ in
         #];
 
         firewall = {                            # firewall options
+            checkReversePath = false;
             allowPing = false;                   # you can restrict ping to your host in case you'll need
             # allowedTCPPorts = [ ... ];        # allowed ports TCP and UDP, below option for ranges
             # allowedTCPPortRanges = [ 
@@ -25,20 +35,21 @@ in
             # ];
             #enable = true;                      # toggle for enabling firewall
             # if packets are still dropped, they will show up in dmesg
-            logReversePathDrops = true;
+            
+            ##logReversePathDrops = true;
             # wireguard trips rpfilter up
-            extraCommands = ''
+            ##extraCommands = ''
                 # Full access from Lan.
-                ip46tables -I INPUT -j ACCEPT -i ${lan}
+            ##    ip46tables -I INPUT -j ACCEPT -i ${lan}
 
 
-                ip46tables -t mangle -I nixos-fw-rpfilter -p udp -m udp --sport 51830 -j RETURN
-                ip46tables -t mangle -I nixos-fw-rpfilter -p udp -m udp --dport 51830 -j RETURN
-            '';
-            extraStopCommands = ''
-                ip46tables -t mangle -D nixos-fw-rpfilter -p udp -m udp --sport 51830 -j RETURN || true
-                ip46tables -t mangle -D nixos-fw-rpfilter -p udp -m udp --dport 51830 -j RETURN || true
-            '';
+            ##    ip46tables -t mangle -I nixos-fw-rpfilter -p udp -m udp --sport 51830 -j RETURN
+            ##    ip46tables -t mangle -I nixos-fw-rpfilter -p udp -m udp --dport 51830 -j RETURN
+            ##'';
+            ##extraStopCommands = ''
+            ##    ip46tables -t mangle -D nixos-fw-rpfilter -p udp -m udp --sport 51830 -j RETURN || true
+            ##    ip46tables -t mangle -D nixos-fw-rpfilter -p udp -m udp --dport 51830 -j RETURN || true
+            ##'';
         };
         hostName = "nixos";  # hostname for ur PC
         networkmanager = {                      # NM options
@@ -58,9 +69,8 @@ in
             # noProxy = ;
             # rsyncProxy = ;
         # };
-        useDHCP = false; # DHCP setting. you MUST follow generated hardware-configuration.nix
-        #interfaces.eno0.useDHCP = true;
-        #interfaces.wls6.useDHCP = true;
+        useDHCP = lib.mkDefault true; # DHCP setting. you MUST follow generated hardware-configuration.nix
+        interfaces.${wan}.useDHCP = true;
     
     };
     time = {                                    # basically TZ and HW clocks
