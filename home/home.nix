@@ -23,21 +23,18 @@
 		./config/vscode
 	];
 
-	  stylix = {
-    
-    enable = true;
-    image = ./wallpapers/milk/balcony.jpg;
-    polarity = "dark";
-    autoEnable = true;
-
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";
-    
-
-    opacity = {
-      applications = 0.8;
-      terminal = 0.8;
-      popups = 0.8;
-      desktop = 0.8;
-    };
+  stylix = {
+  	enable 			 = true;
+  	image 			 = ./wallpapers/milk/balcony.jpg;
+  	polarity 		 = "dark";
+  	autoEnable 	 = true;
+  	base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";
+  
+  	opacity = {
+  	  applications = 0.8;
+  	  terminal 		 = 0.8;
+  	  popups       = 0.8;
+  	  desktop      = 0.8;
+  	};
   };
 }

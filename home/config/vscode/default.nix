@@ -16,5 +16,6 @@
       enable = true;
       package = pkgs.vscodium;
       enableUpdateCheck = false;
+      enableExtensionUpdateCheck = false;
     };
 }

@@ -13,16 +13,17 @@
         fixed-center = true;
         gtk-layer-shell = true;
         spacing = 0;
-        margin-top = 7;
+        margin-top = 10;
         margin-bottom = 0;
         margin-left = 448;
         margin-right = 448;
 
         modules-left = [
             "sway/workspaces"
+            "sway/window"
         ];
         modules-center = [
-            "group/datetime" 
+            "clock" 
         ];
         modules-right = [ 
             "sway/language" 
@@ -31,12 +32,20 @@
             "group/hardware"
             "network" 
             "custom/notification"
+            "tray"
         ];
 
                 
         "sway/workspaces" = {
             all-outputs = true;
             disable-scroll = true;
+            active-only = false;
+        };
+        
+        "sway/window" = {
+            format = "<span color='#202020' bgcolor='#d3869b' > 󰣆 </span> {app_id}";
+            separate-outputs = true;
+            icon = false;
         };
 
         "sway/language" = {
@@ -55,15 +64,29 @@
             };
         };
 
-        "clock#time" = {
-            format = "󰥔 {:%H:%M}";
+        "clock" = {
+            format = "{:%a %d %b %R}";
+            format-alt = "{:%I:%M %p}";
             #on-click = "thunderbird";
             tooltip-format = "<big><tt>{calendar}</tt></big>";
-        };
-        "clock#date" = {
-            format = "{:%a %d}";
-            on-click = "thunderbird";
-            tooltip-format = "<big><tt>{calendar}</tt></big>";
+            calendar = {
+                mode = "month";
+                mode-mon-col = 3;
+                on-scroll = 1;
+                on-click-right = "mode";
+                format = {
+                  months = "<span color='#ffead3'><b>{}</b></span>";
+                  weekdays = "<span color='#ffcc66'><b>{}</b></span>";
+                  today = "<span color='#ff6699'><b>{}</b></span>";
+                };
+              };
+              actions = {
+                on-click-right = "mode";
+                on-click-forward = "tz_up";
+                on-click-backward = "tz_down";
+                on-scroll-up = "shift_up";
+                on-scroll-down = "shift_down";
+              };
         };
 
         # Pulseaudio
@@ -73,11 +96,13 @@
             format-source-muted = "󰍭";
             format-muted = "󰖁 / {format_source}";
             format-icons = {
-              default = [
-                "󰕿"
-                "󰖀"
-                "󰕾"
-              ];
+              headphone = "";
+                hands-free = "";
+                headset = "";
+                phone = "";
+                portable = "";
+                car = "";
+                default = ["" "" ""];
             };
             on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
             on-click-right = "${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
@@ -95,37 +120,40 @@
               "󰤥"
               "󰤨"
             ];
-            format-wifi = "{icon}";
-            format-ethernet = "󰈀"; # 󰈁
-            format-disconnected = "⚠";
+            format-wifi = "󰤨 Wi-Fi";
+            format-ethernet = "󱘖 Wired";
+            format-linked = "󱘖 {ifname} (No IP)";
+            format-disconnected = "󰤮 Off";
             tooltip-format-wifi =  "  {ifname} @ {essid}\nIP: {ipaddr}\nStrength: {signalStrength}%\nFreq: {frequency}MHz\n {bandwidthUpBits}  {bandwidthDownBits}";
             tooltip-format-ethernet = " {ifname}\nIP: {ipaddr}\n {bandwidthUpBits}  {bandwidthDownBits}";
             tooltip-format-disconnected = "Disconnected";
-            format-alt = "  {ifname}";
+            format-alt = "󰤨 {signalStrength}%";
             on-click = "${pkgs.networkmanagerapplet}/bin/nm-connection-editor";
             interval = 5;
         };
 
         memory = {
             format = "{percentage}%";
+            format-alt = "󰾅 {used}GB";
             interval = 2;
             on-click = "foot -e bash -c btop";
             on-click-right = "powersave toggle";
             states.critical = 80;
         };
 
+        "tray" = {
+            icon-size = 12;
+            spacing = 5;
+        };
 
-        "cpu#usage" = {
-            format = "{usage}%";
+
+        "cpu" = {
+            format = "󰍛 {usage}% ({load})";
+            format-alt = "{icon0}{icon1}{icon2}{icon3}";
+            format-icons = ["▁" "▂" "▃" "▄" "▅" "▆" "▇" "█"];
             interval = 2;
             on-click = "foot -e btop";
             states.critical = 100;
-            tooltip = false;
-        };
-        "cpu#load" = {
-            format = "({load})";
-            interval = 2;
-            on-click = "foot -e btop";
             tooltip = false;
         };
 
@@ -167,18 +195,9 @@
         "group/hardware" = {
             orientation = "horizontal";
             modules = [
-                "cpu#usage"
-                "cpu#load"
+                "cpu"
                 "temperature"
                 "memory"
-            ];
-        };
-
-        "group/datetime" = {
-            orientation = "horizontal";
-            modules = [
-                "clock#time"
-                "clock#date"
             ];
         };
 

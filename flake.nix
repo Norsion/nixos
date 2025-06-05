@@ -69,7 +69,7 @@
 					# It declares options for other modules to define (give a value). 
 					# It processes them and defines options declared in other modules.
 				  modules = [ 
-						./module/configuration.nix              # it uses ./configuration.nix as a module
+						./modules/configuration.nix              # it uses ./configuration.nix as a module
 						home-manager.nixosModules.home-manager
 						stylix.nixosModules.stylix
 					];
