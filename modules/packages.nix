@@ -62,6 +62,7 @@
     		pulseaudio # Audio.
     		playerctl # Multimedia controls.
     		sway # Sway WM.
+				swayfx # Fork of Sway with extra option and effects
     		waybar # Sway bar.
 				eww # standalone widget system or waybar
 				mpvpaper # Video wallpapers.
@@ -106,9 +107,15 @@
 				# gnome extensions
 				# gnome-shell-extensions
 				
-
+				catppuccin-sddm
   ];
 
+	services.displayManager.sddm = {
+  	enable = true;
+  	theme = "catppuccin-mocha";
+  	package = pkgs.kdePackages.sddm;
+	};
+	
 	programs = {
 				zsh.enable			= true;
 				xwayland.enable = true;
