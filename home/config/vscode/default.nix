@@ -40,6 +40,7 @@
         "workbench.activityBar.location"= "top";
         "workbench.secondarySideBar.defaultVisibility"= "visible";
         "outline.showVariables"= false;
+        "workbench.editor.showTabs" = "none";
       };
     };
 }
