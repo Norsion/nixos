@@ -45,6 +45,16 @@ in
             enp6s0.useDHCP = true;
         };
         nameservers = [ "1.1.1.1" "8.8.8.8" "8.8.4.4" ];
+
+        firewall = {
+            enable = true;
+            allowPing = false;
+            allowedTCPPorts = [
+                22 # ssh
+                80 
+                443 # HTTP/HTTPS
+            ];
+        };
     };
     time = {                                    # basically TZ and HW clocks
         timeZone = "Europe/Saratov";             # TZ, see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
