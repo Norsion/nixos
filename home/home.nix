@@ -16,6 +16,8 @@
 		./config/git
 		./config/firefox
 		./config/firefox/textfox
+		./config/librewolf
+		./config/librewolf/textfox
 		./config/foot
 		./config/sway
 		./config/swaync
