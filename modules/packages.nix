@@ -47,6 +47,7 @@
 
 				# Desktop apps
     		firefox # Was best browser... 
+				librewolf
 				obsidian	# md editor 
 				foot # terminal emulator
 				vial	# keyboard settings
@@ -61,7 +62,7 @@
     		pavucontrol # Sound applet.
     		pulseaudio # Audio.
     		playerctl # Multimedia controls.
-    		sway # Sway WM.
+    		#sway # Sway WM.
 				swayfx # Fork of Sway with extra option and effects
     		waybar # Sway bar.
 				eww # standalone widget system or waybar

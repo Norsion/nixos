@@ -1,5 +1,5 @@
 # wm and wayland comositors options
-{ lib, config, ... }:
+{ lib, config, pkgs, ... }:
 
 {
 	  services.gnome.gnome-keyring.enable = lib.mkForce false;
@@ -8,9 +8,10 @@
     programs.waybar.enable = true;
 		programs.sway = {
 			enable = true;
+			package = pkgs.swayfx;
 			wrapperFeatures = {
 				base = true;
-				gtk  = true;
+				gtk  = true; #Whether to enable the wrapGAppsHook wrapper to execute sway with required environment variables for GTK applications.
 			};
 		};
 }
