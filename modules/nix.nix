@@ -1,7 +1,7 @@
 { pkgs, lib, ... }:
 {
 	# NixOS:
-	nix.settings.experimental-features = [ "nix-command" "flakes" ];
+	nix.settings.experimental-features = [ "nix-command" "flakes" "pipe-operators" ];
 
 	# Home-manager:
 	# nix = {

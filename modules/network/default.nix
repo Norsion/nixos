@@ -47,13 +47,26 @@ in
         nameservers = [ "1.1.1.1" "8.8.8.8" "8.8.4.4" ];
 
         firewall = {
-            enable = true;
+            enable = false;
             allowPing = false;
             allowedTCPPorts = [
                 22 # ssh
                 80 
                 443 # HTTP/HTTPS
             ];
+
+            extraCommands = ''
+                # Full access from Lan.
+                ip46tables -I INPUT -j ACCEPT -i ${lan}
+
+
+                ip46tables -t mangle -I nixos-fw-rpfilter -p udp -m udp --sport 51830 -j RETURN
+                ip46tables -t mangle -I nixos-fw-rpfilter -p udp -m udp --dport 51830 -j RETURN
+            '';
+            extraStopCommands = ''
+                ip46tables -t mangle -D nixos-fw-rpfilter -p udp -m udp --sport 51830 -j RETURN || true
+                ip46tables -t mangle -D nixos-fw-rpfilter -p udp -m udp --dport 51830 -j RETURN || true
+            '';
         };
     };
     time = {                                    # basically TZ and HW clocks

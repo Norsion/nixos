@@ -65,7 +65,6 @@
         "redirection" = "fg=#cdd6f4";
         "arg0" = "fg=#cdd6f4";
         "default" = "fg=#cdd6f4";
-        "cursor" = "fg=#cdd6f4";
       };
     };
 

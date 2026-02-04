@@ -1,11 +1,9 @@
 { config, pkgs, ... }:
 {
     services = {
+        desktopManager.gnome.enable = true; # toggle for GNOME DE
         xserver = {
             enable = true; 
-            desktopManager= {
-	            gnome.enable = true; # toggle for GNOME DE
-            };
         };
     };
 }

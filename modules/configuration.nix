@@ -15,7 +15,6 @@
 			./locales.nix
 			./network/default.nix
 			./sound.nix
-			./stylix/default.nix
 			./nix.nix
 			./fonts.nix
 			./nixpkgs.nix
@@ -50,8 +49,8 @@
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.hitonoe = {
-		isNormalUser	= true;
-		home		= "/home/hitonoe";
+		isNormalUser = true;
+		home = "/home/hitonoe";
 		extraGroups	= [ "wheel" ]; # Enable ‘sudo’ for the user.
 		shell = pkgs.zsh;
   };

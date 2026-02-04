@@ -1,7 +1,7 @@
 { config, ...}:
 {
   textfox = {
-    enable = true;
-    profile = "hitonoe";
+    enable = false;
+    profiles = "hitonomi";
   };
 }

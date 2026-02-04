@@ -5,10 +5,10 @@
 
 {
     programs.librewolf = {
-            enable = true;
+            enable = false;
 
             # Privacy about:config settings
-            profiles.hitonoe = {
+            profiles.hitonomi = {
                 settings = {
                     "browser.send_pings"                                  = false;
                     "browser.urlbar.speculativeConnect.enabled"           = false;

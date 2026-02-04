@@ -1,0 +1,124 @@
+@import "./colors.css";
+
+* {
+    all: unset;
+    font-family: "Source Code Pro", "Material Design Icons Desktop";
+    font-size: 14px;
+    color: @white;
+}
+
+window.bar {
+    color: @theme_fg_color;
+    background-image: linear-gradient(90deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 100%);
+}
+
+.container {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 10px;
+}
+
+.workspaces {
+    padding-top: 10px;
+}
+
+.workspaces button {
+    min-width: 44px;
+    margin-bottom: 6px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 8px;
+    background-color: @transparent;
+    color: @white;
+    transition: all 0.3s ease;
+}
+
+.workspaces button.focused {
+    background-color: @activedim;
+    color: @white;
+    transition: all 0s ease;
+}
+
+.workspaces button.focused:hover {
+    background-color: @activedim;
+    color: @white;
+    transition: all 0s ease;
+}
+
+.workspaces button:hover {
+    background-color: @hovered;
+    color: @white;
+}
+
+.workspaces button.urgent {
+    background-color: @red;
+    color: @black;
+}
+
+.notification {
+    color: yellow;
+}
+
+.sysicon {
+    margin-top: 5px;
+}
+
+.tray {
+    border-bottom: 1px;
+    border-color: @darkgray;
+    border-style: solid;
+    padding-bottom: 12px
+}
+
+.trayicon {
+    margin-top: 12px;
+}
+
+label.time {
+    color: @active;
+    font-size: 20px;
+    font-family: "Noto Sans";
+    font-weight: bold;
+}
+
+label.date {
+    color: @lightgray;
+    font-size: 11px;
+}
+
+.circular {
+    background-color: @darkgray;
+    color: @active;
+    font-size: 4px;
+    min-width: 30px;
+    min-height: 30px;
+}
+
+.wallpapers {
+    background-color: transparent;
+    border-radius: 6px;
+}
+
+.wallpaperContainer {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.wallpaperButton {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border: 2px;
+    border-style: solid;
+    border-color: transparent;
+    transition: all 0.3s ease;
+}
+
+.wallpaperButton:hover {
+    border-color: @active;
+}
+
+.wallpaperImage {
+    font-size: 10px;
+}

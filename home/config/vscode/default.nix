@@ -25,8 +25,14 @@
         "debug.console.fontSize"= 16.0;
         "editor.fontFamily"= lib.mkDefault "JetBrainsMono";
         "editor.fontSize"= 16.0;
+        "editor.tabSize" = 2;
+        "editor.inlayHints.enabled"= "off";
         "editor.inlayHints.fontFamily"= lib.mkDefault "JetBrainsMono";
         "editor.inlineSuggest.fontFamily"= lib.mkDefault "JetBrainsMono";
+        "editor.guides.indentation"=false;
+        "editor.guides.bracketPairs"=false;
+        "editor.wordWrap"="off";
+        "diffEditor.wordWrap"="off";
         "editor.minimap.sectionHeaderFontSize"= 10.285714285714286;
         "extensions.autoCheckUpdates"= false;
         "markdown.preview.fontFamily"= lib.mkDefault "JetBrainsMono";
@@ -36,11 +42,15 @@
         "screencastMode.fontSize"= 64.0;
         "terminal.integrated.fontSize"= 16.0;
         "update.mode"= "none";
+        "workbench.colorCustomizations.editor.lineHighlightBorder" = "#9fced11f";
+        "workbench.colorCustomizations.editor.lineHighlightBackground"= "#1073cf2d";
         "workbench.colorTheme"= "Stylix";
         "workbench.activityBar.location"= "top";
         "workbench.secondarySideBar.defaultVisibility"= "visible";
         "outline.showVariables"= false;
-        "workbench.editor.showTabs" = "none";
+        "workbench.editor.showTabs" = "multiple";
+
+        "blockman.n04ColorComboPreset" = "Classic Dark 1 (Super gradients)";
       };
     };
 }

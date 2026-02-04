@@ -9,11 +9,9 @@
 
             autoLogin.enable = false;       # autologin, for security purposes i DO NOT recommend toggle it
         };
-        xserver = {
-            displayManager = {
-                gdm.enable = false;         # toggle for GDM
-                #wayland.enable = true;
-           }; 
-        };
+        displayManager = {
+            gdm.enable = false;         # toggle for GDM
+            #wayland.enable = true;
+        }; 
     };
 }

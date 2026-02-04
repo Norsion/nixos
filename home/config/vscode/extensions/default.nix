@@ -4,7 +4,7 @@
 }:
 
 {
-  programs.vscode.extensions = with pkgs.vscode-extensions; [
+  programs.vscode.profiles.default.extensions = with pkgs.vscode-extensions; [
     jnoortheen.nix-ide
     stylelint.vscode-stylelint
     ms-azuretools.vscode-docker
@@ -20,5 +20,9 @@
     gruntfuggly.todo-tree
     xadillax.viml
     redhat.vscode-yaml
+    llvm-vs-code-extensions.vscode-clangd
+    ms-vscode.cmake-tools
+    formulahendry.code-runner
+    k--kato.intellij-idea-keybindings
   ];
 }

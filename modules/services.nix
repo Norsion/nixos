@@ -20,7 +20,8 @@
             #};
             xkb = {                                  # xkb options
                 layout = "us,ru";                    # layouts
-                variant = "pc105";                   # if your keyboard isn't QWERTY - set it here
+                variant = "";                   # if your keyboard isn't QWERTY - set it here
+                model = "pc105";
                 options = "grp:alt_shift_toggle";    # switching method for xkb
             };
         };

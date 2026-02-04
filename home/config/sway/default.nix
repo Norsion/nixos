@@ -4,6 +4,8 @@
 	... 
 }:
 let 
+
+	color = "#ffffff";
 	super = "Mod4";
 	workspace1  = "workspace number 1";
   workspace2  = "workspace number 2";
@@ -18,42 +20,99 @@ let
 
 	terminal    = "${pkgs.foot}/bin/foot";
 	appLauncher = "${pkgs.fuzzel}/bin/fuzzel";
+	selection = "slurp -d -b ${color}26 -c ${color} -w 0 -s 00000000";
+	format = "%Y-%m-%d_%H-%M-%S";
+
+	notifyEnd = ''swayscript notify-stop'';
+  notifyStart = ''swayscript notify-start'';
+
+  optipng = ''optipng -o1 "''${scrFile}"'';
+	picEdit = ''swappy -f - -o -'';
+  picFull = ''-o $(swaymsg -t get_outputs | jq -r ".[] | select(.focused) | .name") -'';
+	picSelected = ''-g "''${scrSelection}" -'';
+	picToBuffer = ''wl-copy -t image/png'';
+  picToFile = ''tee "''${scrFile}"'';
+	picPrepFile = prepFile "\$HOME/image" "png";
+	picRefLatestFile = refLatestFile "png";
+  screenshot = ''grim'';
+  selectStop = ''pkill -SIGINT slurp'';
+
+	getSelection = ''
+    scrSelection=$(${selection})
+    [[ -n "''${scrSelection}" ]] || exit
+  '';
+
+ refLatestFile = ext: ''
+    scrLatest="''${scrPath}/latest.${ext}"
+    rm "''${scrLatest}"
+    ln -s "''${scrLatestRef}" "''${scrLatest}"
+  '';
+
+	prepFile = path: ext: ''
+    # Focused app id by default.
+    curWindow=$(printf "%s" $(swaymsg -t get_tree | jq '.. | select(.type?) | select(.focused==true) | .app_id') | parse-filename)
+
+    # If no id (i.e. xwayland), then use a name (title).
+    [[ "''${curWindow}" = "null" ]] && curWindow=$(printf "%s" $(swaymsg -t get_tree | jq '.. | select(.type?) | select(.focused==true) | .name') | parse-filename)
+
+    # If no app in focus, use "unknown" dir.
+    [[ "''${curWindow}" =~ ^[0-9]+$ ]] && curWindow="unknown"
+
+    # Prepare dir and file path.
+    scrPath="${path}"
+    scrDir="${path}/''${curWindow}"
+    mkdir -p "''${scrDir}"
+    scrName="$(date +${format}).${ext}"
+    scrFile="''${scrDir}/''${scrName}"
+    scrLatestRef="./''${curWindow}/''${scrName}"
+  '';
+  
+	SelectScreenshot =
+    pkgs.writeShellScriptBin "select-screenshot" ''
+      ${selectStop} || {
+        ${getSelection}
+        ${notifyStart}
+        ${picPrepFile}
+
+        ${screenshot} ${picSelected} | ${picEdit} | ${picToFile} | ${picToBuffer}
+        ${notifyEnd}
+        ${optipng}
+        ${picRefLatestFile}
+      };
+    '';
+
+
 in 
 {
 	#appLauncher = "${pkgs.wofi}/bin/wofi --show drun";
 	#audioControl      = "${pkgs.pulseaudio}/bin/pactl";
 
+
 	wayland.windowManager.sway = {
 			enable = true;
-			package = pkgs.swayfx;
-			checkConfig = false;
+			package = pkgs.sway;
+			#package = pkgs.swayfx;
+			#checkConfig = false;
 			wrapperFeatures.gtk = true;
 			systemd.enable = true;
+			xwayland = true;
 
-			extraConfig = ''
+			/* extraConfig = ''
 			${
         if config.wayland.windowManager.sway.package == pkgs.swayfx
         then "
-        blur enable
-        blur_passes 1
-
-        corner_radius 10
         shadows enable
-
-        layer_effects launcher blur enable
-        layer_effects launcher blur_ignore_transparent enable
-        layer_effects swaybar blur enable
-        layer_effects swaybar blur_ignore_transparent enable
-        layer_effects waybar blur enable
-        layer_effects waybar blur_ignore_transparent enable
-        layer_effects notifications blur enable
-        layer_effects notifications blur_ignore_transparent enable
-        layer_effects logout_dialog blur enable
-        layer_effects swayosd blur enable
-        layer_effects swayosd blur_ignore_transparent enable"
+				shadows_on_csd enable
+				shadow_blur_radius 50
+				shadow_color #0000007F
+				corner_radius 10
+				blur disable
+				titlebar_separator disable
+				set $border_width 0
+				"
         else ""
       }
-			'';
+			''; */
 
 			# Sway-specific Configuration
 			config = {
@@ -78,6 +137,9 @@ in
         };
 
 				keybindings = {
+					# Screenshot
+					#"${super}+v" = "exec ${SelectScreenshot}";
+
 					# Terminal
 					"${super}+t" = "exec ${terminal}";
 
@@ -167,7 +229,8 @@ in
 				bars = [];
 
 				gaps = {
-					inner = 7;
+					outer = 0;
+					inner = 10;
 				};
 
 				window = { 
@@ -184,7 +247,8 @@ in
 
 				startup = [
 					#{ command = "foot"; }
-					{ command = "${pkgs.swayfx}/bin/swaymsg 'workspace 1; exec ${pkgs.foot}/bin/foot'"; }
+					#{ command = "${pkgs.swayfx}/bin/swaymsg 'workspace 1; exec ${pkgs.foot}/bin/foot'"; }
+					{ command = "${pkgs.sway}/bin/swaymsg 'workspace 1; exec ${pkgs.foot}/bin/foot'"; }
 				];
 			};
 		};

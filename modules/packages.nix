@@ -8,14 +8,23 @@
 	environment.systemPackages = with pkgs; [
 				# core
 				android-tools     # Android adb tool. Can be used to connect to itself via wireless debugging.
-    		vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     		binwalk            # Can analyze files for other files inside them.
     		btop htop          # System monitors.
+
+				# C/C++ packages
+				clang # Компилятор
+        clang-tools
+        cmake
+        cppcheck # Static analysis tool for C/C++ code
+
+				curl               # CLI http client.
     		coreutils usbutils # Common utilities.
     		fastfetch          # Systeminfo summary.
 				neofetch					 # Systeminfo summary.
+				neovim # Text editor.
     		ffmpeg             # Video/audio converter.
     		file               # Get general info about a file.
+				fzf								 # Command-line fuzzy finder written in Go
     		gcc                # C compiler.
     		gdu                # TUI storage analyzer.
     		gnumake gnused     # GNU utils.
@@ -26,24 +35,31 @@
     		lshw               # Detailed hardware info tool.
     		lsof               # Find current file users.
     		nmap               # Network analyzer.
+				openssh						 # Ssh client.
+				openssl 					 # Cryptography tools.
     		parallel           # Run programs in parallel.
     		zip unzip          # Zip archive/unarchive tools.
     		smartmontools      # S.M.A.R.T. tools.
     		sqlite             # Serverless file-based database engine.
     		tree               # Show directory stricture as a tree.
-    		ventoy             # Boot multiple ISO/images from a single USB stick.
+				tcpdump # Sniff tool.
+      	tmux # Terminal multiplexor.
+      	transmission_4 # Torrent client.
+        util-linux # Common Linux utilities.
+
+    		#ventoy             # Boot multiple ISO/images from a single USB stick.
     		wget               # CLI http download tool.
     		git
-    		curl               # CLI http client.
+
 				wireguard-tools
     		networkmanager
     		home-manager
     		neovim 	
 				xray
-				utillinux
 				zmap				
-				eza #modern alternative for the venerable file-listing command-line program ls
 				bat # cat alternative
+				tldr #Simplified and community-driven man pages
+				navi
 
 				# Desktop apps
     		firefox # Was best browser... 
@@ -62,21 +78,22 @@
     		pavucontrol # Sound applet.
     		pulseaudio # Audio.
     		playerctl # Multimedia controls.
-    		#sway # Sway WM.
-				swayfx # Fork of Sway with extra option and effects
+    		sway # Sway WM.
+				#swayfx # Fork of Sway with extra option and effects
     		waybar # Sway bar.
-				eww # standalone widget system or waybar
+
+				ags # standalone widget system or waybar
 				mpvpaper # Video wallpapers.
 
+				# Themes
+				catppuccin-sddm
+				gtk4
 				catppuccin-cursors # Mouse cursor theme
         catppuccin-papirus-folders # Icon theme, e.g. for pcmanfm-qt
         papirus-folders # For the catppucing stuff work
 
 				# Common
 				evince	# Document viewer.
-
-				# Job apps
-				openvpn
 
 				# Dev apps
 				android-studio
@@ -103,12 +120,10 @@
 			  # other
     		tor-browser # Privacy browser.
     		universal-android-debloater # Debloat Android devices.
-				jan
 
+				lmstudio # LM Studio is an easy to use desktop app for experimenting with local LLMs
 				# gnome extensions
-				# gnome-shell-extensions
-				
-				catppuccin-sddm
+				# gnome-shell-extension
   ];
 
 	services.displayManager.sddm = {
@@ -118,9 +133,9 @@
 	};
 	
 	programs = {
-				zsh.enable			= true;
-				xwayland.enable = true;
-				firefox.enable  = true;
-				waybar.enable   = true;
+				zsh.enable			 = true;
+				xwayland.enable  = true;
+				firefox.enable   = true;
+				waybar.enable    = false;
 	};
 }

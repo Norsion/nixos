@@ -7,7 +7,7 @@
         stylix.enable   = true;
         #eww.enable     = true;
         #dunst.enable   = true;
-				#waybar.enable  = true;
+				waybar.enable  = true;
         #wofi.enable     = true;
 
         # cli

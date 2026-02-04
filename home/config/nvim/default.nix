@@ -17,7 +17,7 @@ in {
         home.packages = with pkgs; [
             #rnix-lsp 
             nixfmt # Nix
-            sumneko-lua-language-server 
+            lua-language-server 
             stylua # Lua
         ];
 

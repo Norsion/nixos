@@ -1,229 +1,177 @@
+@define-color white      #F2F2F2;
+@define-color black      #000203;
+@define-color text       #BECBCB;
+@define-color lightgray  #686868;
+@define-color darkgray   #353535;
+@define-color red        #F38BA8;
+
+@define-color black-transparent-1 rgba(0, 0, 0, 0.1);
+@define-color black-transparent-2 rgba(0, 0, 0, 0.2);
+@define-color black-transparent-3 rgba(0, 0, 0, 0.3);
+@define-color black-transparent-4 rgba(0, 0, 0, 0.4);
+@define-color black-transparent-5 rgba(0, 0, 0, 0.5);
+@define-color black-transparent-6 rgba(0, 0, 0, 0.6);
+@define-color black-transparent-7 rgba(0, 0, 0, 0.7);
+@define-color black-transparent-8 rgba(0, 0, 0, 0.8);
+@define-color black-transparent-9 rgba(0, 0, 0, 0.9);
+@define-color black-solid         rgba(0, 0, 0, 1.0);
+
 * {
-  all: unset;
+    font-family:
+        Iosevka,
+        Material Design Icons Desktop;
+    font-size: 13px;
+    padding: 0;
+    margin: 0;
 }
 
-/* Button */
-button {
-  box-shadow: inset 0 -0.25rem transparent;
-  border: none;
-}
-
-button:hover {
-  box-shadow: inherit;
-  text-shadow: inherit;
-}
-
-/* Tooltip */
-tooltip {
-  background: @base00;
-  color: @base05;
-  border: 1px solid @base03;
-  border-radius: 5px;
-}
-
-tooltip label {
-  margin: 0.5rem;
-}
-
-/*  Waybar window */
 window#waybar {
-  background: rgba(0, 0, 0, 0);
+    background-color: @black-transparent-3;
+    color: @text;
+    border-radius: 0;
 }
 
-/* Left Modules */
-.modules-left {
-  padding-left: 0.2rem;
+tooltip {
+    background: @black-solid;
+    border: 1px solid @darkgray;
+    border-radius: 0;
+}
+tooltip label {
+    color: @text;
 }
 
-/* Right Modules */
-.modules-right {
-  padding-right: 0.2rem;
-}
-
-/* Modules */
-#tray,
-#language,
-#pulseaudio,
-#cpu,
-#memory,
-#network,
-#battery,
-#custom-notification,
-#workspaces button,
-#custom-nixlogo,
-#image,
-#privacy,
-#clock {
-  color: rgba(205, 207, 70, 0.89);
-  background: @base01;
-  border: 1px solid @base03;
-  border-radius: 5px;
-  margin: 0.35rem 0.25rem;
-  padding: 0.2rem 0.6rem 0.2rem 0.6rem;
-}
-
-#privacy {
-  background: @base0B;
-}
-
-#cpu {
-  color: rgb(236, 93, 189);
-}
-
-#memory {
-  color: rgb(0, 119, 255);
-}
-
-#custom-notification,
-#network {
-  color: rgb(255, 255, 255);
-}
-
-#temperature {
-  color: rgb(70, 207, 155);
-  background: @base01;
-  border: 1px solid @base03;
-  border-radius: 5px; 
-  margin: 0.35rem 0.25rem;
-  padding: 0.2rem 0.6rem 0.2rem 0.6rem;
-}
-
-.modules-left #workspaces button {
-  border-bottom: 1px solid @base03;
-}
-.modules-left #workspaces button.focused,
-.modules-left #workspaces button.active {
-  border-bottom: 1px solid @base03;
-}
-.modules-center #workspaces button {
-  border-bottom: 1px solid @base03;
-}
-.modules-center #workspaces button.focused,
-.modules-center #workspaces button.active {
-  border-bottom: 1px solid @base03;
-}
-.modules-right #workspaces button {
-  border-bottom: 1px solid @base03;
-}
-.modules-right #workspaces button.focused,
-.modules-right #workspaces button.active {
-  border-bottom: 1px solid @base03;
+#workspaces {
 }
 
 #workspaces button {
-  border-radius: 3px;
-  transition: 200ms linear;
-}
-
-#workspaces button:last-child {
-  margin-right: 0;
+    background-color: transparent;
+    color: @lightgray;
+    transition: all 0.3s ease;
 }
 
 #workspaces button:hover {
-  background: lighter(@base05);
-  color: @base00;
+    box-shadow: inherit;
+    text-shadow: inherit;
+    background: transparent;
+    border: 1px solid rgba(0, 0, 0, 0);
+    color: @white;
+    transition: all 0.3s ease;
 }
 
-#workspaces button.empty {
-  background: @base00;
-  border: 1px solid @base03;
-  color: @base05;
-}
-
-#workspaces button.empty:hover {
-  background: lighter(@base03);
-  color: @base05;
+#workspaces button.focused,
+#workspaces button.active {
+    color: @white;
+    transition: all 0.3s ease;
+    animation: colored-gradient 10s ease infinite;
 }
 
 #workspaces button.urgent {
-  background: @base08;
-  color: @base05;
+    background-color: @red;
+    color: @black;
+    transition: all 0.3s ease;
 }
 
-#workspaces button.urgent:hover {
-  background: lighter(@base08);
-  color: @base05;
-}
+/* -------------------------------------------------------------------------------- */
 
-#workspaces button.special {
-  background: @base0A;
-  color: @base05;
-}
-
-#workspaces button.special:hover {
-  background: lighter(@base0A);
-}
-
-#workspaces button.active {
-  background: @base0D;
-  color: @base00;
-}
-
-#workspaces button.active:hover {
-  background: lighter(@base0D);
-  color: @base00;
-}
-
-#workspaces button.current_output.focused {
-  background: @base0D;
-  color: @base00;
-}
-
-/* Systray */
-#tray > .passive {
-  -gtk-icon-effect: dim;
-}
-
-#tray > .needs-attention {
-  -gtk-icon-effect: highlight;
-  background: @base08;
-}
-
-menu {
-  background: @base00;
-  border: 1px solid @base03;
-  border-radius: 8px;
-}
-
-menu separator {
-  background: @base03;
-}
-
-menu menuitem {
-  background: transparent;
-  padding: 0.5rem;
-  transition: 200ms;
-}
-
-menu menuitem:hover {
-  background: @base02;
-}
-
-menu menuitem:first-child {
-  border-radius: 8px 8px 0 0;
-}
-
-menu menuitem:last-child {
-  border-radius: 0 0 8px 8px;
-}
-
-menu menuitem:only-child {
-  border-radius: 8px;
-}
-
-/* Notification */
+#submap,
+#mode,
+#tray,
+#cpu,
+#memory,
+#backlight,
+#pulseaudio.audio,
+#pulseaudio.microphone,
+#network.wlo1,
+#network.eno1,
+#bluetooth,
+#battery,
+#clock,
+#mpd,
+#custom-media,
 #custom-notification {
-  color: @base05;
+    background-color: transparent;
+    color: @text;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    margin-left: 0;
+    margin-right: 0;
+    border-radius: 20px;
+    transition: all 0.3s ease;
 }
 
-#pulseaudio-slider highlight {
-  background: @base05;
-  border: 1px solid @base03;
+#submap {
+    border: 0;
 }
 
-/* Keyframes */
-@keyframes blink {
-  to {
-    color: @base05;
-  }
+/* -------------------------------------------------------------------------------- */
+
+/* If workspaces is the leftmost module, omit left margin */
+.modules-left > widget:first-child > #workspaces button,
+.modules-left > widget:first-child > #tray,
+.modules-left > widget:first-child > #cpu,
+.modules-left > widget:first-child > #memory,
+.modules-left > widget:first-child > #backlight,
+.modules-left > widget:first-child > #pulseaudio.audio,
+.modules-left > widget:first-child > #pulseaudio.microphone,
+.modules-left > widget:first-child > #network.wlo1,
+.modules-left > widget:first-child > #network.eno1,
+.modules-left > widget:first-child > #bluetooth,
+.modules-left > widget:first-child > #battery,
+.modules-left > widget:first-child > #clock,
+.modules-left > widget:first-child > #custom-notification {
+    margin-top: 4px;
+}
+
+.modules-right > widget:last-child > #workspaces button,
+.modules-right > widget:last-child > #tray,
+.modules-right > widget:last-child > #cpu,
+.modules-right > widget:last-child > #memory,
+.modules-right > widget:last-child > #backlight,
+.modules-right > widget:last-child > #pulseaudio.audio,
+.modules-right > widget:last-child > #pulseaudio.microphone,
+.modules-right > widget:last-child > #network.wlo1,
+.modules-right > widget:last-child > #network.eno1,
+.modules-right > widget:last-child > #bluetooth,
+.modules-right > widget:last-child > #battery,
+.modules-right > widget:last-child > #clock,
+.modules-right > widget:last-child > #custom-notification {
+    margin-bottom: 4px;
+}
+
+/* -------------------------------------------------------------------------------- */
+
+#tray {
+    background-color: transparent;
+    padding: 1px 5px;
+}
+#tray menu {
+    padding: 2px;
+    border-radius: 0;
+}
+
+/* -------------------------------------------------------------------------------- */
+
+#pulseaudio-slider, #backlight-slider {
+    margin-top: 6px;
+}
+
+#pulseaudio-slider slider, #backlight-slider slider {
+    min-height: 0px;
+    min-width: 0px;
+    opacity: 0;
+    background-image: none;
+    border: none;
+    box-shadow: none;
+}
+#pulseaudio-slider trough, #backlight-slider trough {
+    min-height: 40px;
+    min-width: 5px;
+    border-radius: 5px;
+    background-color: black;
+}
+#pulseaudio-slider highlight, #backlight-slider highlight {
+    min-width: 5px;
+    border: 1px solid @text;
+    border-radius: 5px;
+    background-color: @text;
 }

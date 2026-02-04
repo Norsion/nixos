@@ -7,14 +7,10 @@
         settings = {
             main = {
                 term = "xterm-256color";
-                font = lib.mkForce "JetBrainsMono Nerdfont:size=13:line-height=16px";
+                font = lib.mkForce "Noto Mono:size=13";
                 workers = 32;
                 initial-window-size-chars = "115x24";
                 pad = "12x12 center";
-            };
-            cursor = {
-                style = "beam";
-                beam-thickness = 1;
             };
 
             mouse = {

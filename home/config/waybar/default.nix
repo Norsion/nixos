@@ -5,33 +5,37 @@
     systemd.enable = true;
     systemd.target = "graphical-session.target";
     
+    
     settings = {
       mainBar = {
         layer = "top";
-        position = "top";
-        exclusive = true;
-        fixed-center = true;
+        position = "left";
+        width = 24;
+        #exclusive = true;
+        #fixed-center = true;
         gtk-layer-shell = true;
         spacing = 0;
         margin-top = 10;
-        margin-bottom = 0;
-        margin-left = 448;
-        margin-right = 448;
+        margin-bottom = 10;
+        margin-left = 0;
+        margin-right = 0;
 
         modules-left = [
-            "sway/workspaces"
-            "sway/window"
-        ];
-        modules-center = [
+            "custom/notification"
             "clock" 
         ];
+        modules-center = [
+            "sway/workspaces"
+            #"sway/window"
+        ];
         modules-right = [ 
-            "sway/language" 
+            #"sway/language" 
+            "pulseaudio/slider"
             "pulseaudio"
-            "privacy"
-            "group/hardware"
+            #"privacy"
+            #"group/hardware"
             "network" 
-            "custom/notification"
+            #"bluetooth"
             "tray"
         ];
 
@@ -43,7 +47,7 @@
         };
         
         "sway/window" = {
-            format = "<span color='#202020' bgcolor='#d3869b' > 󰣆 </span> {app_id}";
+            format = "<span>{:.40}</span>";
             separate-outputs = true;
             icon = false;
         };
@@ -65,19 +69,20 @@
         };
 
         "clock" = {
-            format = "{:%a %d %b %R}";
-            format-alt = "{:%I:%M %p}";
+            interval = 1;
+            format = "{:%I\n%M\n%p}";
+            format-alt = "{:%d\n%m\n%y\n󰥔\n%I\n%M\n%S\n%p}";
             #on-click = "thunderbird";
             tooltip-format = "<big><tt>{calendar}</tt></big>";
             calendar = {
-                mode = "month";
+                mode = "year";
                 mode-mon-col = 3;
                 on-scroll = 1;
                 on-click-right = "mode";
                 format = {
                   months = "<span color='#ffead3'><b>{}</b></span>";
                   weekdays = "<span color='#ffcc66'><b>{}</b></span>";
-                  today = "<span color='#ff6699'><b>{}</b></span>";
+                  today = "<span color='#ff6699'><nmb>{}</b></span>";
                 };
               };
               actions = {
@@ -90,11 +95,16 @@
         };
 
         # Pulseaudio
+        "pulseaudio/slider" = {
+          min = 0;
+          max = 100;
+          orientation = "vertical";
+        };
         pulseaudio = {
-            format = "{volume} {icon} / {format_source}";
+            format = "{volume}\n{icon}\n{format_source}";
             format-source = "󰍬";
             format-source-muted = "󰍭";
-            format-muted = "󰖁 / {format_source}";
+            format-muted = "󰖁\n{format_source}";
             format-icons = {
               headphone = "";
                 hands-free = "";
@@ -120,10 +130,10 @@
               "󰤥"
               "󰤨"
             ];
-            format-wifi = "󰤨 Wi-Fi";
-            format-ethernet = "󱘖 Wired";
+            format-wifi = "󰤨";
+            format-ethernet = "󱘖";
             format-linked = "󱘖 {ifname} (No IP)";
-            format-disconnected = "󰤮 Off";
+            format-disconnected = "󰤮";
             tooltip-format-wifi =  "  {ifname} @ {essid}\nIP: {ipaddr}\nStrength: {signalStrength}%\nFreq: {frequency}MHz\n {bandwidthUpBits}  {bandwidthDownBits}";
             tooltip-format-ethernet = " {ifname}\nIP: {ipaddr}\n {bandwidthUpBits}  {bandwidthDownBits}";
             tooltip-format-disconnected = "Disconnected";
@@ -139,6 +149,18 @@
             on-click = "foot -e bash -c btop";
             on-click-right = "powersave toggle";
             states.critical = 80;
+        };
+
+        "bluetooth" = {
+          format-disabled = "";
+          format-off = "";
+          format-on =  "󰂯";
+          format-connected = "󰂯";
+          format-connected-battery = "󰂯";
+          tooltip-format-connected = "";
+          tooltip-format-enumerate-connected = "";
+          on-click = "blueman-manager";
+          tooltip = true;
         };
 
         "tray" = {
@@ -208,5 +230,9 @@
         ${builtins.readFile "${self}/home/config/waybar/style.css"}
       '';
   };
+
+  # xdg.configFile."waybar/config".source = lib.mkForce ''${self}/home/config/waybar/config.jsonc'';
+  # Optionally, for styling:
+  # xdg.configFile."waybar/style.css".source = lib.mkForce ''./waybar/vertical/style.css'';
 }
 
